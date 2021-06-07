@@ -14,27 +14,28 @@ export default {
   props: {
     probeType: {
       type: Number,
-      default: 0,
-    },
-    pullUpLoad: {
-      type: Boolean,
-      default: false,
-    },
+      default: 0
+    }
   },
   data() {
     return {
-      scroll: {},
+      scroll: {}
     }
   },
-  created() {
-    this.$nextTick(() => {
+  mounted() {
+    this.init()
+  },
+  methods: {
+    init() {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,
-        pullUpLoad: this.pullUpLoad,
-        probeType: this.probeType,
+        probeType: this.probeType
       })
-    })
-  },
+    },
+    refresh() {
+      this.scroll && this.scroll.refresh && this.scroll.refresh()
+    }
+  }
 }
 </script>
 

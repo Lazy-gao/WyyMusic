@@ -5,7 +5,7 @@
         <div class="tag" :style="{ backgroundColor: item.titleColor }">
           <span>{{ item.typeTitle }}</span>
         </div>
-        <img :src="item.pic" />
+        <img :src="item.pic" @load="imageLoad" />
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -19,15 +19,19 @@ export default {
       type: Array,
       default() {
         return []
-      },
-    },
+      }
+    }
   },
   data() {
     return {
-      currentIndex: 0,
+      currentIndex: 0
     }
   },
-  methods: {},
+  methods: {
+    imageLoad() {
+      this.$bus.$emit('imageLoad')
+    }
+  }
 }
 </script>
 

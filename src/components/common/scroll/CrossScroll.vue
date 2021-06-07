@@ -13,45 +13,40 @@ export default {
   name: 'CrossScroll',
   data() {
     return {
-      scroll: {},
+      scroll: {}
     }
   },
-  // props: {
-  //   probeType: {
-  //     type: Number,
-  //     default: 0,
-  //   },
-  //   scrollX: {
-  //     type: Boolean,
-  //     default: true,
-  //   },
-  // },
-  created() {},
+  props: {
+    probeType: {
+      type: Number,
+      default: 0
+    },
+    scrollX: {
+      type: Boolean,
+      default: true
+    }
+  },
   mounted() {
     this.init()
   },
   methods: {
     init() {
       this.scroll = new BScroll(this.$refs.wrapper, {
-        scrollX: true,
-        probeType: 3, // listening scroll event
+        scrollX: this.scrollX,
+        scrollY: false,
+        click: true,
+        probeType: this.probeType // listening scroll event
       })
       console.log(this.scroll)
-      this.scroll.on('scrollStart', () => {
-        console.log('scrollStart-')
-      })
-      this.scroll.on('scroll', ({ y }) => {
-        console.log('scrolling-')
-        console.log(y)
-      })
-      this.scroll.on('scrollEnd', () => {
-        console.log('scrollingEnd')
-      })
     },
+
+    refresh() {
+      this.scroll && this.scroll.refresh && this.scroll.refresh()
+    }
   },
   beforeDestroy() {
     this.scroll.destroy()
-  },
+  }
 }
 </script>
 

@@ -20,7 +20,7 @@ export default {
   name: 'PasswordLogin',
   data() {
     return {
-      password: '930816.gwx',
+      password: '930816.gwx'
     }
   },
   methods: {
@@ -40,14 +40,17 @@ export default {
       this.$store.commit(USERNAME, res.profile.nickname)
       this.$store.commit(USERId, res.profile.userId)
       this.$store.commit(AVATARURL, res.profile.avatarUrl)
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .password-login {
+  position: relative;
+  z-index: 1;
   height: 100vh;
+  background-color: #fff;
 
   .password {
     padding: 50px 8px;

@@ -60,7 +60,10 @@ export default {
 
 <style scoped lang="less">
 .phone-login {
+  position: relative;
+  z-index: 1;
   height: 100vh;
+  background-color: #fff;
 
   .phone-login-title {
     display: flex;

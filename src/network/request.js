@@ -7,8 +7,10 @@ export function request(config) {
   const instance = axios.create({
     baseURL: 'http://localhost:3000',
     timeout: 5000,
-    withCredentials: true,
+    withCredentials: true
   })
+  // post请求头
+  instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
   /**
    * 请求拦截器
    * 每次请求前，如果存在token则在请求头中携带token
@@ -19,10 +21,10 @@ export function request(config) {
       // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
       // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
       // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
-      const { cookie } = store.state
-      if (cookie) {
-        config.headers.cookies = cookie
-      }
+      // const { cookie } = store.state
+      // if (cookie) {
+      //   config.headers.cookies = cookie
+      // }
       // const { token } = store.state
       // if (token) {
       //   config.headers.authorization = token
@@ -75,7 +77,7 @@ const tip = msg => {
   Toast({
     message: msg,
     duration: 1000,
-    forbidClick: true,
+    forbidClick: true
   })
 }
 
@@ -86,8 +88,8 @@ const toLogin = () => {
   router.replace({
     path: '/login',
     query: {
-      redirect: router.currentRoute.fullPath,
-    },
+      redirect: router.currentRoute.fullPath
+    }
   })
 }
 

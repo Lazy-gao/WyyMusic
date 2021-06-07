@@ -1,9 +1,9 @@
 <template>
   <round-nav-bar>
-    <cross-scroll class="crossScroll">
+    <cross-scroll class="crossScroll" ref="crossScroll">
       <round-nav-bar-item v-for="item in roundData" :key="item.name">
         <template v-slot:top>
-          <img :src="item.iconUrl" />
+          <img :src="item.iconUrl" @load="imageLoad" />
         </template>
         <template v-slot:bottom>
           <span>{{ item.name }}</span>
@@ -23,19 +23,25 @@ export default {
   components: {
     RoundNavBar,
     RoundNavBarItem,
-    CrossScroll,
+    CrossScroll
   },
   props: {
     roundData: {
       type: Array,
       default() {
         return []
-      },
-    },
+      }
+    }
   },
   data() {
     return {}
   },
+  methods: {
+    imageLoad() {
+      this.$refs.crossScroll.refresh()
+      this.$bus.$emit('imageLoad')
+    }
+  }
 }
 </script>
 

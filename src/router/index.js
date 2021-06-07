@@ -14,6 +14,10 @@ VueRouter.prototype.replace = function replace(location) {
 }
 
 const Find = () => import('pages/find/Find')
+const CloudVillage = () => import('pages/cloudVillage/CloudVillage')
+const Profile = () => import('pages/profile/Profile')
+const KMusic = () => import('pages/kMusic/KMusic')
+const Podcast = () => import('pages/podcast/Podcast')
 const Login = () => import('components/content/login/Login')
 const PhoneLogin = () => import('components/content/login/PhoneLogin')
 const Verification = () => import('components/content/login/Verification')
@@ -25,48 +29,64 @@ const routes = [
     redirect: '/login',
     meta: {
       // 标识不登录能不能访问该页面，false为可以，true为不行，必须登录才可以访问
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     path: '/find',
     component: Find,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/podcast',
+    component: Podcast
+  },
+  {
+    path: '/profile',
+    component: Profile
+  },
+  {
+    path: '/kMusic',
+    component: KMusic
+  },
+  {
+    path: '/cloudVillage',
+    component: CloudVillage
   },
   {
     path: '/login',
     component: Login,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     path: '/phoneLogin',
     component: PhoneLogin,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     path: '/verification',
     component: Verification,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     path: '/passwordLogin',
     component: PasswordLogin,
     meta: {
-      requiresAuth: false,
-    },
-  },
+      requiresAuth: false
+    }
+  }
 ]
 
 const router = new VueRouter({
-  routes,
+  routes
 })
 
 router.beforeEach((to, from, next) => {
@@ -79,7 +99,7 @@ router.beforeEach((to, from, next) => {
     // 没有登录。提示用户是否需要登录
     Dialog.confirm({
       title: '访问权限',
-      message: '该功能需要登录才能访问，确认登录吗？',
+      message: '该功能需要登录才能访问，确认登录吗？'
     })
       .then(() => {
         // 确认,跳转到登录页面

@@ -32,7 +32,7 @@ export default {
       time: 30, // 倒计时时间
       verificationCode: '', // 验证码
       errorInfo: '', // 错误提示
-      showKeyboard: true, // 显示软键盘
+      showKeyboard: true // 显示软键盘
     }
   },
   watch: {
@@ -43,7 +43,7 @@ export default {
       } else {
         this.errorInfo = ''
       }
-    },
+    }
   },
   methods: {
     onClickLeft() {
@@ -54,7 +54,7 @@ export default {
       const res = await getVerifyCode(this.$store.state.phone)
       if (res.data === false) {
         Toast({
-          message: '当前网络繁忙，请稍后再试！',
+          message: '当前网络繁忙，请稍后再试！'
         })
         return
       }
@@ -74,7 +74,7 @@ export default {
         const res = await getVerifyCode(this.$store.state.phone)
         if (res.data === false) {
           Toast({
-            message: '当前网络繁忙，请稍后再试！',
+            message: '当前网络繁忙，请稍后再试！'
           })
           return
         }
@@ -89,7 +89,7 @@ export default {
       if (res.data === false) {
         Toast({
           message: '验证码不正确',
-          icon: 'close',
+          icon: 'close'
         })
       }
       this.$router.replace('/find')
@@ -97,15 +97,17 @@ export default {
     // 跳转密码登录页面
     toPasswordLogin() {
       this.$router.push('/passwordLogin')
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .verification {
+  position: relative;
+  z-index: 1;
   height: 100vh;
-  //background-color: #f00;
+  background-color: #fff;
 
   .password {
     padding: 1px 12px;
