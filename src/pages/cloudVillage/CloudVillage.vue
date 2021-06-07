@@ -18,7 +18,7 @@
     </nav-bar>
     <!--  列表导航  -->
     <horizontal-nav-bar class="horizontal" :horizontal-data="navBarList" @videoGroup="videoGroupId" />
-    <scroll class="content" ref="scroll">
+    <scroll class="content" ref="scroll" :pull-down-refresh="true" @pullingDown="pullingDown">
       <!--  搜索框  -->
       <lazy-input />
       <!--   视频   -->
@@ -96,6 +96,10 @@ export default {
       this.videoGroupListData = []
       // 通过对应的id来请求对应的视频数据
       this.getVideoListData(this.videoGroup)
+    },
+    pullingDown() {
+      this.getVideoListData(this.videoGroup)
+      this.$refs.scroll.finishPullDown()
     }
   }
 }
