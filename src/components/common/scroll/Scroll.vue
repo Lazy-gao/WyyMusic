@@ -1,6 +1,5 @@
 <template>
-  <div class="wrapper"
-       ref="wrapper">
+  <div class="wrapper" ref="wrapper">
     <div class="content">
       <slot></slot>
     </div>
@@ -24,23 +23,23 @@ export default {
     },
     pullDownRefresh: {
       type: Boolean,
-      default: false
+      default: true
     },
     pullUpLoad: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
-  data () {
+  data() {
     return {
       scroll: {}
     }
   },
-  mounted () {
+  mounted() {
     this.init()
   },
   methods: {
-    init () {
+    init() {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,
         probeType: this.probeType,
@@ -50,19 +49,19 @@ export default {
       this.scroll.on('pullingDown', this.pullingDownHandler)
       this.scroll.on('pullingUp', this.pullingUpHandler)
     },
-    refresh () {
-      this.scroll && this.scroll.refresh && this.scroll.refresh()
-    },
-    pullingDownHandler () {
+    pullingDownHandler() {
       this.$emit('pullingDown')
     },
-    pullingUpHandler () {
+    pullingUpHandler() {
       this.$emit('pullingUp')
     },
-    finishPullDown () {
+    refresh() {
+      this.scroll && this.scroll.refresh && this.scroll.refresh()
+    },
+    finishPullDown() {
       this.scroll && this.scroll.finishPullDown && this.scroll.finishPullDown()
     },
-    finishPullUp () {
+    finishPullUp() {
       this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
     }
   }

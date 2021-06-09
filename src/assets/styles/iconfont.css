@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2590073 */
-  src: url('//at.alicdn.com/t/font_2590073_gy7vbs5qfe.woff2?t=1623132465135') format('woff2'),
-  url('//at.alicdn.com/t/font_2590073_gy7vbs5qfe.woff?t=1623132465135') format('woff'),
-  url('//at.alicdn.com/t/font_2590073_gy7vbs5qfe.ttf?t=1623132465135') format('truetype');
+  src: url('//at.alicdn.com/t/font_2590073_9ovgtl2xd1v.woff2?t=1623216422593') format('woff2'),
+  url('//at.alicdn.com/t/font_2590073_9ovgtl2xd1v.woff?t=1623216422593') format('woff'),
+  url('//at.alicdn.com/t/font_2590073_9ovgtl2xd1v.ttf?t=1623216422593') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bofangshu:before {
+  content: "\e665";
+}
+
+.icon-dashujukeshihuaico-:before {
+  content: "\e7fb";
+}
+
+.icon-bofang1:before {
+  content: "\e611";
+}
+
+.icon-xuanze:before {
+  content: "\e619";
+}
+
+.icon-arrow-left:before {
+  content: "\e60e";
+}
+
+.icon-wenhao-:before {
+  content: "\e718";
 }
 
 .icon-shoucang:before {
