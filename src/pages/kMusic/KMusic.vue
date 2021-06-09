@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'KMusic',
-  data() {
+  data () {
     return {}
   }
 }

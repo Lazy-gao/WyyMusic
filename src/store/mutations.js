@@ -2,7 +2,23 @@
  * @Author : Lazy
  * @Date : 2021/6/2
  */
-import { USERPHONE, PASSWORD, TOKEN, COOKIE, USERNAME, USERId, AVATARURL } from './types'
+import {
+  USERPHONE,
+  PASSWORD,
+  TOKEN,
+  COOKIE,
+  USERNAME,
+  USERId,
+  AVATARURL,
+  GETVID,
+  GETVIDEODETAIL,
+  GETVIDEOUrl,
+  GETVIDEODETAILINFO,
+  GETMVDETAIL,
+  GETMVADDRESS,
+  GETMVDETAILINFO,
+  ISMV
+} from './types'
 import { setItem } from 'common/storage'
 
 export default {
@@ -37,4 +53,36 @@ export default {
   [AVATARURL](state, payload) {
     state.avatarUrl = payload
   },
+  // 保存点击视频的id
+  [GETVID](state, payload) {
+    state.vid = payload
+  },
+  // 保存视频详细信息
+  [GETVIDEODETAIL](state, payload) {
+    state.videoDetail = payload
+  },
+  // 保存视频播放地址
+  [GETVIDEOUrl](state, payload) {
+    state.videoUrl = payload
+  },
+  // 保存视频评论数量等信息
+  [GETVIDEODETAILINFO](state, payload) {
+    state.videoDetailInfo = payload
+  },
+  // 保存mv详情
+  [GETMVDETAIL](state, payload) {
+    state.mvDetail = payload
+  },
+  // 保存mv播放地址
+  [GETMVADDRESS](state, payload) {
+    state.mvAddress = payload
+  },
+  // 保存mv评论数量等信息
+  [GETMVDETAILINFO](state, payload) {
+    state.mvDetailInfo = payload
+  },
+  // 保存点击的是不是mv
+  [ISMV](state, payload) {
+    state.isMv = payload
+  }
 }

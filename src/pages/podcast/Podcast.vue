@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'Podcast',
-  data() {
+  data () {
     return {}
   }
 }

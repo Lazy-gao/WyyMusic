@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper" ref="wrapper">
+  <div class="wrapper"
+       ref="wrapper">
     <div class="content">
       <slot></slot>
     </div>
@@ -9,7 +10,9 @@
 <script>
 import BScroll from '@better-scroll/core'
 import PullDown from '@better-scroll/pull-down'
+import Pullup from '@better-scroll/pull-up'
 
+BScroll.use(Pullup)
 BScroll.use(PullDown)
 
 export default {
@@ -22,33 +25,45 @@ export default {
     pullDownRefresh: {
       type: Boolean,
       default: false
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
   },
-  data() {
+  data () {
     return {
       scroll: {}
     }
   },
-  mounted() {
+  mounted () {
     this.init()
   },
   methods: {
-    init() {
+    init () {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,
         probeType: this.probeType,
-        pullDownRefresh: this.pullDownRefresh
+        pullDownRefresh: this.pullDownRefresh,
+        pullUpLoad: this.pullUpLoad
       })
       this.scroll.on('pullingDown', this.pullingDownHandler)
+      this.scroll.on('pullingUp', this.pullingUpHandler)
     },
-    refresh() {
+    refresh () {
       this.scroll && this.scroll.refresh && this.scroll.refresh()
     },
-    pullingDownHandler() {
+    pullingDownHandler () {
       this.$emit('pullingDown')
     },
-    finishPullDown() {
+    pullingUpHandler () {
+      this.$emit('pullingUp')
+    },
+    finishPullDown () {
       this.scroll && this.scroll.finishPullDown && this.scroll.finishPullDown()
+    },
+    finishPullUp () {
+      this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
     }
   }
 }

@@ -12,6 +12,10 @@ const originalReplace = VueRouter.prototype.replace
 VueRouter.prototype.replace = function replace(location) {
   return originalReplace.call(this, location).catch(err => err)
 }
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const Find = () => import('pages/find/Find')
 const CloudVillage = () => import('pages/cloudVillage/CloudVillage')
@@ -22,6 +26,8 @@ const Login = () => import('components/content/login/Login')
 const PhoneLogin = () => import('components/content/login/PhoneLogin')
 const Verification = () => import('components/content/login/Verification')
 const PasswordLogin = () => import('components/content/login/PasswordLogin')
+const Play = () => import('components/content/video/Play')
+const RecommendSongList = () => import('pages/find/findChildren/RecommendSongList')
 
 const routes = [
   {
@@ -79,6 +85,20 @@ const routes = [
   {
     path: '/passwordLogin',
     component: PasswordLogin,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/play/:vid',
+    component: Play,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/recommendSongList',
+    component: RecommendSongList,
     meta: {
       requiresAuth: false
     }

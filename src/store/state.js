@@ -13,4 +13,12 @@ export default {
   userName: '', // 用户名
   userId: '', // 用户id
   avatarUrl: '', // 用户头像
+  vid: '', // 点击要播放视频的id
+  videoDetail: {}, // 要播放的视频的详细信息
+  videoUrl: [], // 要播放的视频的播放地址
+  videoDetailInfo: {}, // 要播放的视频的评论等信息
+  mvDetail: {}, // 要播放的MV的详细信息
+  mvAddress: [], // 要播放的MV的播放地址
+  mvDetailInfo: {}, // 要播放的MV的评论等信息
+  isMv: false // 是否是mv
 }

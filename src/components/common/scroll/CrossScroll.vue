@@ -37,7 +37,6 @@ export default {
         click: true,
         probeType: this.probeType // listening scroll event
       })
-      console.log(this.scroll)
     },
 
     refresh() {

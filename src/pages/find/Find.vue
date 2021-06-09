@@ -14,63 +14,92 @@
         <span class="iconfont icon-ziyuan"></span>
       </template>
     </nav-bar>
-    <scroll class="content" ref="scroll">
+    <scroll class="content"
+            ref="scroll"
+            :pull-down-refresh="false"
+            :pull-up-load="false">
       <!--  轮播图  -->
-      <swiper class="swiper" :banner="banner" />
+      <swiper class="swiper"
+              :banner="banner" />
       <!--  圆形导航  -->
-      <main-round-nav-bar class="round" :round-data="roundData" />
+      <main-round-nav-bar class="round"
+                          :round-data="roundData" />
       <!--   推荐歌单   -->
       <div class="recommend-song-list">
-        <header-title :title="recommendSongList.title" :text="recommendSongList.text" sign="icon-ic_arrow_r" />
+        <header-title :title="recommendSongList.title"
+                      :text="recommendSongList.text"
+                      sign="icon-ic_arrow_r" />
         <main-content :creatives="recommendSongList.creatives" />
       </div>
       <!--   私人定制   -->
       <div class="find-cross-line">
-        <header-title :title="customize.title" :text="customize.text" sign="icon-bofangqi-bofang" />
+        <header-title :title="customize.title"
+                      :text="customize.text"
+                      sign="icon-bofangqi-bofang" />
         <scroll-swiper-item :customize-data="customize.creatives" />
       </div>
       <!--   精选音乐视频   -->
       <div class="find-cross-line">
-        <header-title :title="musicVideo.title" :text="musicVideo.text" sign="icon-ic_arrow_r" />
+        <header-title :title="musicVideo.title"
+                      :text="musicVideo.text"
+                      sign="icon-ic_arrow_r" />
         <music-video :ext-info="musicVideo.extInfo" />
       </div>
       <!--   雷达歌单   -->
       <div class="find-cross-line">
-        <header-title :title="radarPlaylist.title" :text="radarPlaylist.text" sign="icon-ic_arrow_r" />
+        <header-title :title="radarPlaylist.title"
+                      :text="radarPlaylist.text"
+                      sign="icon-ic_arrow_r" />
         <main-content :creatives="radarPlaylist.creatives" />
       </div>
       <!--   LOOK直播   -->
       <div class="find-cross-line">
-        <header-title :title="LookData.title" :text="LookData.text" sign="icon-ic_arrow_r" />
+        <header-title :title="LookData.title"
+                      :text="LookData.text"
+                      sign="icon-ic_arrow_r" />
         <main-look-content :creatives="LookData.extInfo" />
       </div>
       <!--   专属场景歌单   -->
       <div class="find-cross-line">
-        <header-title :title="scenePlaylistData.title" :text="scenePlaylistData.text" sign="icon-ic_arrow_r" />
+        <header-title :title="scenePlaylistData.title"
+                      :text="scenePlaylistData.text"
+                      sign="icon-ic_arrow_r" />
         <main-content :creatives="scenePlaylistData.creatives" />
       </div>
       <!--   新歌、新碟、数字专辑   -->
-      <div class="find-cross-line" v-if="Object.keys(newMusic[0].uiElement).length !== 0">
-        <album-title :title="AlbumTitle" :text="newMusic[0].uiElement.button.text" sign="icon-ic_arrow_r" />
-        <album-scroll-swiper-item :new-music="newMusic" :new-disc="newDisc" :album="album" />
+      <div class="find-cross-line"
+           v-if="Object.keys(newMusic[0].uiElement).length !== 0">
+        <album-title :title="AlbumTitle"
+                     :text="newMusic[0].uiElement.button.text"
+                     sign="icon-ic_arrow_r" />
+        <album-scroll-swiper-item :new-music="newMusic"
+                                  :new-disc="newDisc"
+                                  :album="album" />
       </div>
       <!--   排行榜   -->
       <div class="find-cross-line">
-        <header-title :title="rankingList.title" :text="rankingList.text" sign="icon-ic_arrow_r" />
+        <header-title :title="rankingList.title"
+                      :text="rankingList.text"
+                      sign="icon-ic_arrow_r" />
         <ranking-list-data :creatives="rankingList.creatives" />
       </div>
       <!--   音乐日历   -->
       <div class="find-cross-line">
-        <music-calendar :music-calendar="musicCalendar" sign="icon-ic_arrow_r" />
+        <music-calendar :music-calendar="musicCalendar"
+                        sign="icon-ic_arrow_r" />
       </div>
       <!--   播客   -->
       <div class="find-cross-line">
-        <header-title :title="podcastListData.title" :text="podcastListData.text" sign="icon-ic_arrow_r" />
+        <header-title :title="podcastListData.title"
+                      :text="podcastListData.text"
+                      sign="icon-ic_arrow_r" />
         <main-content :creatives="podcastListData.creatives" />
       </div>
       <!--   云村KTV   -->
       <div class="find-cross-line">
-        <header-title :title="ktvData.title" :text="ktvData.text" sign="icon-ic_arrow_r" />
+        <header-title :title="ktvData.title"
+                      :text="ktvData.text"
+                      sign="icon-ic_arrow_r" />
         <ktv :creatives="ktvData.extInfo" />
       </div>
       <!--    广播电台    -->
@@ -80,7 +109,9 @@
       </div>
       <!--   视频合辑   -->
       <div class="find-cross-line">
-        <header-title :title="videoCollectionData.title" :text="videoCollectionData.text" sign="icon-ic_arrow_r" />
+        <header-title :title="videoCollectionData.title"
+                      :text="videoCollectionData.text"
+                      sign="icon-ic_arrow_r" />
         <main-content :creatives="videoCollectionData.creatives" />
       </div>
       <!--   底部   -->
@@ -145,7 +176,7 @@ export default {
     Broadcast,
     Floor
   },
-  data() {
+  data () {
     return {
       cursor: {},
       banner: [], // 轮播图数据
@@ -169,11 +200,11 @@ export default {
       videoCollectionData: {} // 视频合辑
     }
   },
-  created() {
+  created () {
     this.getFindData(this.cursor)
     this.getRoundData()
   },
-  mounted() {
+  mounted () {
     // 监听图片加载完成
     this.$bus.$on('imageLoad', () => {
       // 加载完成重新计算高度
@@ -182,17 +213,18 @@ export default {
   },
   methods: {
     // 获取轮播图、推荐歌单、私人定制、精选音乐视频数据
-    async getFindData() {
+    async getFindData () {
       const res = await getFindData()
+      console.log(res)
       this.cursor = res.data.cursor
       this.banner = res.data.blocks[0].extInfo.banners
       this.recommendSongList = new RecommendSongListData(res.data.blocks[1].creatives, res.data.blocks[1].uiElement)
-      this.customize = new Customize(res.data.blocks[2].creatives, res.data.blocks[2].uiElement)
-      this.musicVideo = new MusicVideoData(res.data.blocks[3].extInfo, res.data.blocks[3].uiElement)
+      this.customize = new Customize(res.data.blocks[3].creatives, res.data.blocks[3].uiElement)
+      this.musicVideo = new MusicVideoData(res.data.blocks[2].extInfo, res.data.blocks[2].uiElement)
       await this.getFindDatas(this.cursor)
     },
     // 获取雷达歌单、LOOK直播、专属场景歌单，新歌、新碟、数字专辑数据
-    async getFindDatas(cursor) {
+    async getFindDatas (cursor) {
       const res = await getFindData(cursor)
       let cursors = res.data.cursor
       this.radarPlaylist = new RadarPlaylist(res.data.blocks[0].creatives, res.data.blocks[0].uiElement)
@@ -211,12 +243,11 @@ export default {
       await this.getFindBottomData(cursors)
     },
     // 排行榜、播客、云村KTV、广播电台、视频合集
-    async getFindBottomData(cursor) {
+    async getFindBottomData (cursor) {
       const res = await getFindData(cursor)
       this.rankingList = new RankingList(res.data.blocks[0].creatives, res.data.blocks[0].uiElement)
       this.podcastListData = new PodcastList(res.data.blocks[1].creatives, res.data.blocks[1].uiElement)
       this.ktvData = new KtvData(res.data.blocks[2].extInfo.roomInfoList, res.data.blocks[2].uiElement)
-      // this.broadcastingData = res.data.blocks[3]
       this.broadcastingTitle.push(
         res.data.blocks[3].creatives[0].uiElement.mainTitle.title,
         res.data.blocks[3].creatives[1].uiElement.mainTitle.title
@@ -225,7 +256,7 @@ export default {
       this.videoCollectionData = new VideoCollection(res.data.blocks[4].creatives, res.data.blocks[4].uiElement)
     },
     // 获取圆形导航数据
-    async getRoundData() {
+    async getRoundData () {
       const res = await roundNavBar()
       this.roundData = res.data
     }

@@ -1,6 +1,9 @@
 <template>
   <div class="videoList">
-    <video-list-item v-for="(item, index) in videoList" :key="index" :video-list-item="item" />
+    <video-list-item v-for="(item, index) in videoList"
+                     :key="index"
+                     :video-list-item="item"
+                     :is-mv="isMv" />
   </div>
 </template>
 
@@ -12,15 +15,19 @@ export default {
   props: {
     videoList: {
       type: Array,
-      default() {
+      default () {
         return []
       }
+    },
+    isMv: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
     VideoListItem
   },
-  data() {
+  data () {
     return {}
   }
 }

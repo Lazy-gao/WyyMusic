@@ -7,7 +7,10 @@
       </template>
       <template v-slot:content>
         <div class="cloudVillage-title">
-          <span :class="{ active: currentIndex === index ? 'active' : '' }" v-for="(item, index) in title" :key="index" @click="handleTitle(index)">{{
+          <span :class="{ active: currentIndex === index ? 'active' : '' }"
+                v-for="(item, index) in title"
+                :key="index"
+                @click="handleTitle(index)">{{
             item
           }}</span>
         </div>
@@ -17,12 +20,20 @@
       </template>
     </nav-bar>
     <!--  列表导航  -->
-    <horizontal-nav-bar class="horizontal" :horizontal-data="navBarList" @videoGroup="videoGroupId" />
-    <scroll class="content" ref="scroll" :pull-down-refresh="true" @pullingDown="pullingDown">
+    <horizontal-nav-bar class="horizontal"
+                        :horizontal-data="navBarList"
+                        @videoGroup="videoGroupId" />
+    <scroll class="content"
+            ref="scroll"
+            :pull-down-refresh="true"
+            :pull-up-load="true"
+            @pullingDown="pullingDown"
+            @pullingUp="pullingUp">
       <!--  搜索框  -->
       <lazy-input />
       <!--   视频   -->
-      <video-list :video-list="videoGroupListData" />
+      <video-list :video-list="videoGroupListData"
+                  :is-mv="isMv" />
     </scroll>
   </div>
 </template>
@@ -34,7 +45,8 @@ import HorizontalNavBar from 'components/common/HorizontalNavBar'
 import LazyInput from 'components/common/LazyInput'
 import VideoList from 'components/content/video/VideoList'
 
-import { getNavBarList, getVideoListData } from 'network/cloudVillage/cloudVillage'
+import { getNavBarList, getVideoListData, getVideoDetail, getVideoPlayAddress, getVideoDetailInfo, getMvDetail, getMvAddress, getMvDetailInfo } from 'network/cloudVillage/cloudVillage'
+import { GETVIDEODETAIL, GETVIDEOUrl, GETVIDEODETAILINFO, GETMVDETAIL, GETMVADDRESS, GETMVDETAILINFO, ISMV } from 'store/types'
 import { Toast } from 'vant'
 
 export default {
@@ -46,60 +58,136 @@ export default {
     LazyInput,
     VideoList
   },
-  data() {
+  data () {
     return {
       title: ['关注', '推荐'],
       currentIndex: 1,
       navBarList: [], // 分类列表数据
       videoGroup: '', // 视频分类id
-      videoGroupListData: [] // 视频数据
+      videoGroupListData: [], // 视频数据
+      page: 0, // 页码
+      type: 1, // 标识内容是视频还是MV， 1 是视频，2 是MV
+      vid: '', // 点击要播放视频的id
+      isMv: false // 是否是mv分类
     }
   },
-  created() {
+  created () {
     this.getNavBarList()
+    this.$bus.$on('toPlayVid', vid => {
+      this.vid = vid
+      if (this.isMv) {
+        this.getMvDetail(this.vid)
+        this.getMvAddress(this.vid)
+        this.getMvDetailInfo(this.vid)
+      } else {
+        this.getVideoDetail(this.vid)
+        this.getVideoPlayAddress(this.vid)
+        this.getVideoDetailInfo(this.vid)
+      }
+    })
   },
-  mounted() {
+  mounted () {
     this.$bus.$on('imageLoad', () => {
       this.$refs.scroll.refresh()
     })
   },
   methods: {
     // 点击切换导航
-    handleTitle(index) {
+    handleTitle (index) {
       this.currentIndex = index
     },
     // 获取视频分类列表数据
-    async getNavBarList() {
+    async getNavBarList () {
       const res = await getNavBarList()
       this.navBarList = res.data
       this.videoGroup = res.data[0].id
       // 获取视频数据
-      await this.getVideoListData(this.videoGroup)
+      await this.getVideoListData(this.videoGroup, this.page)
     },
     // 获取标签列表对应的视频
-    async getVideoListData(id) {
-      const res = await getVideoListData(id)
-      // 关闭提示框
-      Toast.clear()
-      console.log(res)
-      this.videoGroupListData = res.datas
+    async getVideoListData (id, offset) {
+      const res = await getVideoListData(id, offset)
+      Toast.clear() // 关闭提示框
+      let videoGroupListData = [...this.videoGroupListData, ...res.datas]
+      this.page += 1
+      this.videoGroupListData = videoGroupListData
+      this.$refs.scroll.finishPullUp()
     },
+
     // 监听子组件传递过来的标签列表的id,也就是点击切换标签
-    videoGroupId(id) {
-      this.videoGroup = id
+    videoGroupId (id) {
+      if (id === 1000) {
+        this.isMv = true
+        this.videoGroup = id
+        // 开启加载提示框
+        Toast.loading({
+          message: '加载中...',
+          forbidClick: true,
+          loadingType: 'spinner'
+        })
+        this.videoGroupListData = []
+        this.page = 0
+        // 通过对应的id来请求对应的视频数据
+        this.getVideoListData(this.videoGroup)
+        this.$store.commit(ISMV, this.isMv)
+      } else {
+        this.isMv = false
+        this.videoGroup = id
+        // 开启加载提示框
+        Toast.loading({
+          message: '加载中...',
+          forbidClick: true,
+          loadingType: 'spinner'
+        })
+        this.videoGroupListData = []
+        this.page = 0
+        // 通过对应的id来请求对应的视频数据
+        this.getVideoListData(this.videoGroup)
+        this.$store.commit(ISMV, this.isMv)
+      }
+    },
+    pullingDown () {
+      this.getVideoListData(this.videoGroup)
+      this.$refs.scroll.finishPullDown()
+    },
+    pullingUp () {
       // 开启加载提示框
       Toast.loading({
         message: '加载中...',
         forbidClick: true,
         loadingType: 'spinner'
       })
-      this.videoGroupListData = []
-      // 通过对应的id来请求对应的视频数据
-      this.getVideoListData(this.videoGroup)
+      this.getVideoListData(this.videoGroup, this.page)
     },
-    pullingDown() {
-      this.getVideoListData(this.videoGroup)
-      this.$refs.scroll.finishPullDown()
+    // 获取视频的详情信息
+    async getVideoDetail (id) {
+      const res = await getVideoDetail(id)
+      this.$store.commit(GETVIDEODETAIL, res.data)
+    },
+    // 获取视频的播放地址
+    async getVideoPlayAddress (id) {
+      const res = await getVideoPlayAddress(id)
+      this.$store.commit(GETVIDEOUrl, res.urls)
+    },
+    // 获取视频评论数量等信息
+    async getVideoDetailInfo (id) {
+      const res = await getVideoDetailInfo(id)
+      this.$store.commit(GETVIDEODETAILINFO, res)
+    },
+    // 获取点击的mv的详细信息
+    async getMvDetail (id) {
+      const res = await getMvDetail(id)
+      this.$store.commit(GETMVDETAIL, res.data)
+    },
+    // 获取mv播放地址
+    async getMvAddress (id) {
+      const res = await getMvAddress(id)
+      this.$store.commit(GETMVADDRESS, res.data)
+    },
+    // 获取mv评论数量等信息
+    async getMvDetailInfo (id) {
+      const res = await getMvDetailInfo(id)
+      this.$store.commit(GETMVDETAILINFO, res)
     }
   }
 }
@@ -123,6 +211,7 @@ export default {
         margin-right: 20px;
         font-size: 18px;
         color: #919191;
+        height: 40px;
       }
 
       .active {

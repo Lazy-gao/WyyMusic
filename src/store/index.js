@@ -13,11 +13,11 @@ import actions from './actions'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-	state,
-	mutations,
-	getters,
-	actions,
-	modules: {}
+  state,
+  mutations,
+  getters,
+  actions,
+  modules: {}
 })
 
 export default store

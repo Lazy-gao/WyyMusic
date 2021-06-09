@@ -1,48 +1,95 @@
 <template>
-  <div class="video">
-    <div class="top">
-      <img :src="videoListItem.data.coverUrl" alt="" @load="imageLoad" />
-    </div>
-    <div class="bottom">
-      <div class="desc">
-        <span>{{ videoListItem.data.title }}</span>
-      </div>
-      <div class="count">
-        <div class="playCount">
-          <span class="iconfont icon-bofangqi-bofang"></span>
-          <span class="playTime">{{ videoListItem.data.playTime | sellCountFilter }}</span>
-          <span class="iconfont icon-dianzan"></span>
-          <span>{{ videoListItem.data.praisedCount | sellCountFilter }}</span>
+  <div>
+    <template v-if="isMv===false">
+      <div class="video"
+           @click="toPlay(videoListItem.data.vid)">
+        <div class="top">
+          <img :src="videoListItem.data.coverUrl"
+               alt=""
+               @load="imageLoad" />
         </div>
-        <div class="lickCount">
-          <span>{{ videoListItem.data.videoGroup[0].name }}</span>
+        <div class="bottom">
+          <div class="desc">
+            <span>{{ videoListItem.data.title }}</span>
+          </div>
+          <div class="count">
+            <div class="playCount">
+              <span class="iconfont icon-bofangqi-bofang"></span>
+              <span class="playTime">{{ videoListItem.data.playTime | sellCountFilter }}</span>
+              <span class="iconfont icon-dianzan"></span>
+              <span>{{ videoListItem.data.praisedCount | sellCountFilter }}</span>
+            </div>
+            <div class="lickCount">
+              <span>{{ videoListItem.data.videoGroup[0].name }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div class="video"
+           @click="toPlay(videoListItem.data.id)">
+        <div class="top">
+          <img :src="videoListItem.data.coverUrl"
+               alt=""
+               @load="imageLoad" />
+        </div>
+        <div class="bottom">
+          <div class="desc">
+            <span>{{ videoListItem.data.name }}</span>
+          </div>
+          <div class="count">
+            <div class="playCount">
+              <span class="iconfont icon-bofangqi-bofang"></span>
+              <span class="playTime">{{ videoListItem.data.playCount | sellCountFilter }}</span>
+              <span class="iconfont icon-dianzan"></span>
+              <span>{{ videoListItem.data.likeCount | sellCountFilter }}</span>
+            </div>
+            <div class="lickCount">
+              <span>{{ videoListItem.data.videoGroup[0].name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
+import { GETVID } from 'store/types'
+
 export default {
   name: 'VideoListItem',
   props: {
     videoListItem: {
       type: Object,
-      default() {
+      default () {
         return {}
       }
+    },
+    isMv: {
+      type: Boolean,
+      default: false
     }
   },
-  data() {
+  data () {
     return {}
   },
+  created () {
+
+  },
   methods: {
-    imageLoad() {
+    imageLoad () {
       this.$bus.$emit('imageLoad')
+    },
+    toPlay (vid) {
+      this.$bus.$emit('toPlayVid', vid)
+      this.$store.commit(GETVID, vid)
+      this.$router.push('/play/' + vid)
     }
   },
   filters: {
-    sellCountFilter(value) {
+    sellCountFilter (value) {
       if (value < 10000) return value
       return (value / 10000).toFixed(1) + '万'
     }
@@ -107,6 +154,7 @@ export default {
       .iconfont {
         font-size: 12px;
       }
+
       .playTime {
         padding-right: 10px;
       }
